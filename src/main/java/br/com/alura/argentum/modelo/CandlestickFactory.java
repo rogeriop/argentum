@@ -3,7 +3,7 @@ package br.com.alura.argentum.modelo;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class ClandlestickFactory {
+public class CandlestickFactory {
 
 	
 	public Candlestick controiCandleParaData(List<Negociacao> negociacoes, LocalDateTime data) {
