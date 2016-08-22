@@ -67,12 +67,19 @@ public final class Negociacao {
 		return quantidade;
 	}
 	
-	public LocalDateTime getDate() {
+	public LocalDateTime getData() {
 		return data;
 	}
 	
 	public double getVolume() {
 		return this.preco * this.quantidade;
+	}
+
+
+	public boolean isMesmoDia(LocalDateTime outraData) {
+		return this.data.getDayOfMonth() == outraData.getDayOfMonth()
+				&& this.data.getMonth() == outraData.getMonth()
+				&& this.data.getYear() == outraData.getYear();
 	}
 	
 }
