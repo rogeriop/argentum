@@ -7,7 +7,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class CandlestickFactoryTest {
+public class CandleFactoryTest {
 
 	@Test
 	public void sequenciaSimplesDeNigociacoes() {
@@ -19,7 +19,7 @@ public class CandlestickFactoryTest {
 		
 		List<Negociacao> negociacoes = Arrays.asList(negociacao1, negociacao2, negociacao3, negociacao4);
 		
-		Candlestick candlestick = new CandlestickFactory().controiCandleParaData(negociacoes, hoje);
+		Candle candlestick = new CandleFactory().constroiCandleParaData(negociacoes, hoje);
 		
 		assertEquals(40.5, candlestick.getAbertura(), 0.000001);
 		assertEquals(42.3, candlestick.getFechamento(), 0.000001);
@@ -49,9 +49,9 @@ public class CandlestickFactoryTest {
 	    List<Negociacao> negociacoes = Arrays.asList(negociacao1, negociacao2, negociacao3, negociacao4, 
 	    negociacao5, negociacao6, negociacao7, negociacao8);
 	    
-	    CandlestickFactory fabrica = new CandlestickFactory();
+	    CandleFactory fabrica = new CandleFactory();
 
-	    List<Candlestick> candles = ((CandlestickFactory) fabrica).constroiCandles(negociacoes);
+	    List<Candle> candles = ((CandleFactory) fabrica).constroiCandles(negociacoes);
 	    
 	    assertEquals(3, candles.size());
 	    assertEquals(40.5, candles.get(0).getAbertura(), 0.00001);

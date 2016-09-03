@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CandlestickFactory {
+public class CandleFactory {
 
 	
-	public Candlestick controiCandleParaData(List<Negociacao> negociacoes, LocalDateTime data) {
+	public Candle constroiCandleParaData(List<Negociacao> negociacoes, LocalDateTime data) {
 		
 		double abertura = negociacoes.get(0).getPreco();
 		double fechamento = negociacoes.get(negociacoes.size() - 1).getPreco();
@@ -17,20 +17,21 @@ public class CandlestickFactory {
 
 		
 		for (Negociacao negociacao : negociacoes) {
-			if (negociacao.getPreco() < minimo) {
-				minimo = negociacao.getPreco();
-			} else if (negociacao.getPreco() > maximo) { 
-				maximo = negociacao.getPreco();
+			double preco = negociacao.getPreco();
+			if (preco < minimo) {
+				minimo = preco;
+			} else if (preco > maximo) { 
+				maximo = preco;
 			}
-			volume += negociacao.getPreco() * negociacao.getQuantidade();
+			volume += preco * negociacao.getQuantidade();
 		}
 		
-		return  new Candlestick(abertura, fechamento, minimo, maximo, volume, data);
+		return  new Candle(abertura, fechamento, minimo, maximo, volume, data);
 	}
 
-	public List<Candlestick> constroiCandles(List<Negociacao> negociacoes) {
+	public List<Candle> constroiCandles(List<Negociacao> negociacoes) {
 	    // Cria a lista de negociações do dia e a lista de Candles que devemos retornar
-	    List<Candlestick> candlesticks = new ArrayList<>();
+	    List<Candle> candlesticks = new ArrayList<>();
 
 	    List<Negociacao> negociacoesDoDia = new ArrayList<>();
 
@@ -43,8 +44,7 @@ public class CandlestickFactory {
 	            negociacoesDoDia.add(negociacao);
 	        }else{
 	            // se não for mesmo dia, fecha o candle e reinicia variáveis
-	            Candlestick candle = controiCandleParaData(negociacoesDoDia, dataAtual);
-	            candlesticks.add(candle);
+	            geraEAdicionaCandle(candlesticks, negociacoesDoDia, dataAtual);
 
 
 	            negociacoesDoDia = new ArrayList<>();
@@ -56,9 +56,13 @@ public class CandlestickFactory {
 	        }
 
 	    }
-	    // adiciona último candle
-	    Candlestick candle = controiCandleParaData(negociacoesDoDia, dataAtual);
-	    candlesticks.add(candle);
+	    geraEAdicionaCandle(candlesticks, negociacoesDoDia, dataAtual);
 
 	    return candlesticks;	}
+
+	private void geraEAdicionaCandle(List<Candle> candlesticks, List<Negociacao> negociacoesDoDia,
+			LocalDateTime dataAtual) {
+		Candle candle = constroiCandleParaData(negociacoesDoDia, dataAtual);
+		candlesticks.add(candle);
+	}
 }
